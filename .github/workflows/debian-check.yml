@@ -10,10 +10,3 @@ jobs:
     uses: ./.github/workflows/debian-check-version.yml
   call-debian-check-keys:
     uses: ./.github/workflows/debian-check-keys.yml
-  add-reviewers:
-    needs: [call-debian-check-prefix, call-debian-check-version, call-debian-check-keys]
-    if: failure()
-    uses: ryaugusta/pr-add-reviewers-action@v1
-    with:
-      token: ${{ secrets.REVIEW_TOKEN }}
-      team_reviewers: reiviews-test-team
