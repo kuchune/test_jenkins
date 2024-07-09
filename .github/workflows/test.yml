@@ -1,39 +1,13 @@
-name: test
 on:
-  pull_request_target:
-    types: [opened, synchronize, reopened]
-
-permissions:
-  contents: read
-  pull-requests: read
-  checks: write
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-
+  workflow_dispatch:
 jobs:
-  debian-Check:
+  use_api:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          repository: kuchune/check-tools
-          sparse-checkout: do-with-data.py
-          sparse-checkout-cone-mode: false
-          path: test1
-      - uses: actions/checkout@v4
-        if: always()
-        with:
-          repository: kuchune/check-tools
-          sparse-checkout: debianCheck/do-with-data.py
-          path: test2
-      - name: Setup Debug Session
-        if: always()
-        uses: csexton/debugger-action@master
-
-
-
-
-    
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/kuchune/test_jenkins/pulls/12/files

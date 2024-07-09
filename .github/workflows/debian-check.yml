@@ -1,0 +1,12 @@
+name: Debian Check
+on: workflow_call
+
+permissions: write-all
+
+jobs:
+  call-debian-check-prefix:
+    uses: ./.github/workflows/debian-check-prefix.yml
+  call-debian-check-version:
+    uses: ./.github/workflows/debian-check-version.yml
+  call-debian-check-keys:
+    uses: ./.github/workflows/debian-check-keys.yml
